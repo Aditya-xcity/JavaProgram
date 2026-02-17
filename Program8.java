@@ -1,7 +1,11 @@
 /*
 Question: Program to find all the patterns of 0(1+)0 in the given string.
 */
-
+// Name - ADITYA BHARDWAJ
+// Section - D2
+// Roll No - 07
+// Course – B TECH
+// Branch – CSE
 import java.util.Scanner;
 
 public class Program8 {

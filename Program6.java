@@ -1,4 +1,9 @@
 //Program 6:Write a program to rearrange an array by moving all negative numbers to the beginning and all positive numbers to the end (without preserving order), and print the resulting array.
+// Name - ADITYA BHARDWAJ
+// Section - D2
+// Roll No - 07
+// Course – B TECH
+// Branch – CSE
 import java.util.Scanner;
 
 class Program6 {

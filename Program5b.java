@@ -1,4 +1,9 @@
 //Program 5:Write a program to rearrange a given array of integers into zigzag order such that e1 < e2 > e3 < e4 > e5 < e6 ….
+// Name - ADITYA BHARDWAJ
+// Section - D2
+// Roll No - 07
+// Course – B TECH
+// Branch – CSE
 
 //Approach 2
 
