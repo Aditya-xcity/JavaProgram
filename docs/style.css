@@ -1,0 +1,809 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+:root {
+
+    --background: #0d1117;
+
+    --sidebar: #11161d;
+
+    --panel: #161b22;
+
+    --hover: #1c2128;
+
+    --border: #30363d;
+
+    --text: #e6edf3;
+
+    --muted: #8b949e;
+
+    --blue: #58a6ff;
+
+    --green: #3fb950;
+
+}
+
+
+body {
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================
+   APP
+========================= */
+
+.app {
+
+    display: flex;
+
+    height: 100vh;
+
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+
+    width: 310px;
+
+    min-width: 310px;
+
+    background: var(--sidebar);
+
+    border-right:
+        1px solid var(--border);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+}
+
+
+/* LOGO */
+
+.logo {
+
+    height: 65px;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.logo span {
+
+    color: var(--blue);
+
+    font-family: monospace;
+
+}
+
+
+/* REPOSITORY */
+
+.repository {
+
+    padding: 15px;
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.repo-icon {
+
+    color: var(--green);
+
+}
+
+
+/* SEARCH */
+
+.search {
+
+    padding:
+        0 15px 12px;
+
+}
+
+
+.search input {
+
+    width: 100%;
+
+    padding: 10px;
+
+    background: var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 6px;
+
+    color: var(--text);
+
+    outline: none;
+
+}
+
+
+.search input:focus {
+
+    border-color:
+        var(--blue);
+
+}
+
+
+/* STATS */
+
+.stats {
+
+    padding:
+        0 15px 10px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* FILE TREE */
+
+.file-tree {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 5px 10px 20px;
+
+}
+
+
+/* FOLDER */
+
+.folder-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 8px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+}
+
+
+.folder-title:hover {
+
+    background: var(--hover);
+
+}
+
+
+.folder-arrow {
+
+    color: var(--muted);
+
+    width: 14px;
+
+}
+
+
+/* FILE */
+
+.file {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        7px 8px 7px 27px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    overflow: hidden;
+
+}
+
+
+.file:hover {
+
+    background: var(--hover);
+
+    color: var(--text);
+
+}
+
+
+.file.active {
+
+    background:
+        #1f6feb33;
+
+    color:
+        var(--blue);
+
+    font-weight: 600;
+
+}
+
+
+.file-name {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* TOPBAR */
+
+.topbar {
+
+    height: 65px;
+
+    padding:
+        0 25px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.current-file {
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+}
+
+
+.file-path {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 3px;
+
+}
+
+
+.navigation {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.navigation button,
+#copyButton {
+
+    padding:
+        8px 13px;
+
+    background: var(--panel);
+
+    color: var(--text);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+
+.navigation button:hover:not(:disabled),
+#copyButton:hover {
+
+    background: var(--hover);
+
+}
+
+
+.navigation button:disabled {
+
+    opacity: 0.35;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+.welcome-icon {
+
+    width: 90px;
+
+    height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+        #1f6feb22;
+
+    color:
+        var(--blue);
+
+    font-size: 30px;
+
+    font-family: monospace;
+
+    margin-bottom: 25px;
+
+}
+
+
+.welcome h1 {
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.welcome p {
+
+    max-width: 500px;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+
+}
+
+
+.welcome-info {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+}
+
+
+.welcome-info span {
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 20px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   CODE SECTION
+========================= */
+
+.code-section {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 25px;
+
+}
+
+
+.hidden {
+
+    display: none;
+
+}
+
+
+/* CODE HEADER */
+
+.code-header {
+
+    height: 50px;
+
+    padding:
+        0 15px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-bottom: none;
+
+    border-radius:
+        7px 7px 0 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.code-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.language-badge {
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    padding:
+        4px 7px;
+
+    border-radius: 4px;
+
+    background:
+        #23863633;
+
+    color:
+        var(--green);
+
+}
+
+
+/* CODE */
+
+.code-wrapper {
+
+    background:
+        var(--background);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        0 0 7px 7px;
+
+    overflow-x: auto;
+
+}
+
+
+.code-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+.code-table td {
+
+    padding: 0;
+
+    vertical-align: top;
+
+}
+
+
+.line-number {
+
+    width: 60px;
+
+    min-width: 60px;
+
+    text-align: right;
+
+    padding-right: 15px !important;
+
+    color:
+        #484f58;
+
+    user-select: none;
+
+}
+
+
+.code-line {
+
+    padding-left: 10px !important;
+
+    padding-right: 20px !important;
+
+    white-space: pre;
+
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+.notes {
+
+    margin-top: 25px;
+
+}
+
+
+.notes-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+}
+
+
+.notes-header h2 {
+
+    font-size: 18px;
+
+}
+
+
+.notes-header span {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+#notes {
+
+    width: 100%;
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    background: var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    color: var(--text);
+
+    outline: none;
+
+    font-family: inherit;
+
+    line-height: 1.6;
+
+}
+
+
+#notes:focus {
+
+    border-color:
+        var(--blue);
+
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+
+    width: 9px;
+
+    height: 9px;
+
+}
+
+
+::-webkit-scrollbar-track {
+
+    background:
+        var(--background);
+
+}
+
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        #30363d;
+
+    border-radius: 10px;
+
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+
+    background:
+        #484f58;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 230px;
+
+        min-width: 230px;
+
+    }
+
+
+    .code-section {
+
+        padding: 15px;
+
+    }
+
+
+    .topbar {
+
+        padding: 0 15px;
+
+    }
+
+}

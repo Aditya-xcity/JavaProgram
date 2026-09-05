@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Java Program Review</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <span>&lt;/&gt;</span>
+
+            Java Program Review
+
+        </div>
+
+
+        <div class="repository">
+
+            <span class="repo-icon">◉</span>
+
+            <span id="repositoryName">
+                Loading repository...
+            </span>
+
+        </div>
+
+
+        <div class="search">
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search files..."
+            >
+
+        </div>
+
+
+        <div class="stats">
+
+            <span id="fileCount">
+                0 files
+            </span>
+
+        </div>
+
+
+        <div id="fileTree"
+             class="file-tree">
+
+            <div class="loading">
+                Loading files...
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <div id="currentFile"
+                     class="current-file">
+
+                    Select a file
+
+                </div>
+
+
+                <div id="filePath"
+                     class="file-path">
+
+                    Choose a file from the sidebar
+
+                </div>
+
+            </div>
+
+
+
+            <div class="navigation">
+
+
+                <button
+                    id="previousButton"
+                    disabled>
+
+                    ← Previous
+
+                </button>
+
+
+                <button
+                    id="nextButton"
+                    disabled>
+
+                    Next →
+
+                </button>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =========================
+             WELCOME
+        ========================== -->
+
+        <section
+            id="welcome"
+            class="welcome">
+
+
+            <div class="welcome-icon">
+
+                &lt;/&gt;
+
+            </div>
+
+
+            <h1>
+
+                Code Review
+
+            </h1>
+
+
+            <p>
+
+                Browse and review the programs
+                in this repository directly from
+                your browser.
+
+            </p>
+
+
+            <div class="welcome-info">
+
+                <span>☕ Java</span>
+
+                <span>⚙️ C / C++</span>
+
+                <span>🐍 Python</span>
+
+                <span>🗄️ SQL</span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             CODE
+        ========================== -->
+
+        <section
+            id="codeSection"
+            class="code-section hidden">
+
+
+            <div class="code-header">
+
+
+                <div class="code-title">
+
+
+                    <span
+                        id="languageBadge"
+                        class="language-badge">
+
+                        JAVA
+
+                    </span>
+
+
+                    <span id="codeFileName">
+
+                        Program.java
+
+                    </span>
+
+
+                </div>
+
+
+                <button id="copyButton">
+
+                    Copy
+
+                </button>
+
+
+            </div>
+
+
+
+            <div class="code-wrapper">
+
+
+                <table class="code-table">
+
+                    <tbody id="codeBody"></tbody>
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- NOTES -->
+
+            <div class="notes">
+
+
+                <div class="notes-header">
+
+
+                    <h2>
+
+                        Notes
+
+                    </h2>
+
+
+                    <span>
+
+                        Saved locally
+
+                    </span>
+
+
+                </div>
+
+
+                <textarea
+                    id="notes"
+                    placeholder="Write something you want to remember about this program...">
+                </textarea>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
