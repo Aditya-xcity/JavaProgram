@@ -1,3 +1,4 @@
+
 // ============================================
 // GITHUB CODE REVIEW
 // ============================================
@@ -7,13 +8,14 @@
 // CONFIGURATION
 // --------------------------------------------
 
-// Change this if you ever move the repository.
-
 const OWNER = "Aditya-xcity";
 
 const REPOSITORY = "JavaProgram";
 
 const BRANCH = "main";
+
+// Only files inside this folder will be shown.
+const CODE_ROOT = "JavaCodes";
 
 
 // --------------------------------------------
@@ -85,31 +87,33 @@ let currentPath = "";
 
 const supportedExtensions = [
 
+    // Java
     "java",
 
+    // C / C++
     "c",
     "h",
-
     "cpp",
     "hpp",
     "cc",
 
+    // Python
     "py",
 
+    // JavaScript / TypeScript
     "js",
     "ts",
 
+    // Web
     "html",
     "css",
 
+    // Database
     "sql",
 
+    // Other code/data
     "json",
-
-    "xml",
-
-    "md",
-    "txt"
+    "xml"
 
 ];
 
@@ -166,31 +170,30 @@ async function loadRepository() {
         }
 
 
-        // allFiles =
-        //     data.tree
-
-        //         .filter(item => {
-
-        //             return (
-        //                 item.type === "blob" &&
-        //                 isSupportedFile(item.path)
-        //             );
-
-        //         })
-
-
+        // ------------------------------------
+        // ONLY LOAD FILES FROM JavaCodes/
+        // ------------------------------------
 
         allFiles =
-    data.tree
-        .filter(item => {
-            return (
-                item.type === "blob" &&
-                isSupportedFile(item.path)
-            );
-        })
+            data.tree
 
+                .filter(item => {
 
+                    return (
 
+                        item.type === "blob" &&
+
+                        item.path.startsWith(
+                            CODE_ROOT + "/"
+                        ) &&
+
+                        isSupportedFile(
+                            item.path
+                        )
+
+                    );
+
+                })
 
                 .sort((a, b) => {
 
@@ -225,8 +228,23 @@ async function loadRepository() {
 
                 <br><br>
 
-                Check OWNER, REPOSITORY
-                and BRANCH in script.js.
+                Check:
+
+                <br>
+
+                OWNER
+
+                <br>
+
+                REPOSITORY
+
+                <br>
+
+                BRANCH
+
+                <br>
+
+                CODE_ROOT
 
             </div>
 
@@ -238,13 +256,14 @@ async function loadRepository() {
 
 
 // --------------------------------------------
-// CHECK FILE
+// CHECK FILE TYPE
 // --------------------------------------------
 
 function isSupportedFile(path) {
 
     const filename =
         path.split("/").pop();
+
 
     const extension =
         filename
@@ -260,7 +279,7 @@ function isSupportedFile(path) {
 
 
 // --------------------------------------------
-// GET ICON
+// GET FILE ICON
 // --------------------------------------------
 
 function getFileIcon(path) {
@@ -300,11 +319,7 @@ function getFileIcon(path) {
 
         json: "📋",
 
-        xml: "📄",
-
-        md: "📝",
-
-        txt: "📄"
+        xml: "📄"
 
     };
 
@@ -315,7 +330,7 @@ function getFileIcon(path) {
 
 
 // --------------------------------------------
-// BUILD TREE
+// BUILD FILE TREE
 // --------------------------------------------
 
 function renderFileTree() {
@@ -329,7 +344,7 @@ function renderFileTree() {
 
             <div class="loading">
 
-                No files found.
+                No code files found.
 
             </div>
 
@@ -346,10 +361,16 @@ function renderFileTree() {
     visibleFiles.forEach(
         (file, index) => {
 
-          const parts =
-    file.path
-        .replace(/^JavaCodes\//, "")
-        .split("/");
+            // Remove JavaCodes/ from
+            // the displayed structure.
+
+            const parts =
+                file.path
+                    .replace(
+                        CODE_ROOT + "/",
+                        ""
+                    )
+                    .split("/");
 
 
             let current = root;
@@ -411,7 +432,7 @@ function renderFileTree() {
 
 
 // --------------------------------------------
-// RENDER TREE
+// RENDER TREE LEVEL
 // --------------------------------------------
 
 function renderTreeLevel(
@@ -420,7 +441,9 @@ function renderTreeLevel(
 ) {
 
 
+    // ----------------------------------------
     // FOLDERS
+    // ----------------------------------------
 
     Object.keys(node)
 
@@ -457,7 +480,9 @@ function renderTreeLevel(
                     </span>
 
                     <span>
-                        📁 ${escapeHtml(folderName)}
+                        📁 ${escapeHtml(
+                            folderName
+                        )}
                     </span>
 
                 `;
@@ -467,6 +492,10 @@ function renderTreeLevel(
                     document.createElement(
                         "div"
                     );
+
+
+                children.style.display =
+                    "block";
 
 
                 title.addEventListener(
@@ -497,11 +526,19 @@ function renderTreeLevel(
                 );
 
 
-                folder.appendChild(title);
+                folder.appendChild(
+                    title
+                );
 
-                folder.appendChild(children);
 
-                container.appendChild(folder);
+                folder.appendChild(
+                    children
+                );
+
+
+                container.appendChild(
+                    folder
+                );
 
 
                 renderTreeLevel(
@@ -513,7 +550,9 @@ function renderTreeLevel(
         );
 
 
+    // ----------------------------------------
     // FILES
+    // ----------------------------------------
 
     if (node.__files) {
 
@@ -550,7 +589,9 @@ function renderTreeLevel(
                     </span>
 
                     <span class="file-name">
-                        ${escapeHtml(filename)}
+                        ${escapeHtml(
+                            filename
+                        )}
                     </span>
 
                 `;
@@ -568,7 +609,9 @@ function renderTreeLevel(
                 );
 
 
-                container.appendChild(element);
+                container.appendChild(
+                    element
+                );
 
             }
         );
@@ -629,20 +672,28 @@ async function openFile(index) {
             await response.text();
 
 
-        currentFile.textContent =
+        // ------------------------------------
+        // HEADER
+        // ------------------------------------
+
+        const filename =
             file.path
                 .split("/")
                 .pop();
+
+
+        currentFile.textContent =
+            filename;
 
 
         filePath.textContent =
-            file.path;
+            getDisplayPath(
+                file.path
+            );
 
 
         codeFileName.textContent =
-            file.path
-                .split("/")
-                .pop();
+            filename;
 
 
         const extension =
@@ -656,16 +707,28 @@ async function openFile(index) {
             extension.toUpperCase();
 
 
+        // ------------------------------------
+        // CODE
+        // ------------------------------------
+
         renderCode(
             text,
             extension
         );
 
 
+        // ------------------------------------
+        // NOTES
+        // ------------------------------------
+
         loadNotes(
             file.path
         );
 
+
+        // ------------------------------------
+        // SHOW CODE VIEW
+        // ------------------------------------
 
         welcome.classList.add(
             "hidden"
@@ -677,9 +740,21 @@ async function openFile(index) {
         );
 
 
+        // ------------------------------------
+        // UPDATE UI
+        // ------------------------------------
+
         updateActiveFile();
 
         updateNavigation();
+
+
+        // Scroll code section to top
+
+        codeSection.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
 
     } catch (error) {
@@ -691,6 +766,20 @@ async function openFile(index) {
         );
 
     }
+
+}
+
+
+// --------------------------------------------
+// DISPLAY PATH
+// --------------------------------------------
+
+function getDisplayPath(path) {
+
+    return path.replace(
+        CODE_ROOT + "/",
+        ""
+    );
 
 }
 
@@ -729,6 +818,8 @@ function renderCode(
                 );
 
 
+            // Line number
+
             const number =
                 document.createElement(
                     "td"
@@ -742,6 +833,8 @@ function renderCode(
             number.textContent =
                 index + 1;
 
+
+            // Code
 
             const code =
                 document.createElement(
@@ -784,11 +877,19 @@ function renderCode(
             }
 
 
-            row.appendChild(number);
+            row.appendChild(
+                number
+            );
 
-            row.appendChild(code);
 
-            codeBody.appendChild(row);
+            row.appendChild(
+                code
+            );
+
+
+            codeBody.appendChild(
+                row
+            );
 
         }
     );
@@ -797,7 +898,7 @@ function renderCode(
 
 
 // --------------------------------------------
-// LANGUAGE
+// HIGHLIGHT LANGUAGE
 // --------------------------------------------
 
 function getHighlightLanguage(
@@ -842,20 +943,22 @@ function updateActiveFile() {
 
     document
         .querySelectorAll(".file")
-        .forEach(element => {
+        .forEach(
+            element => {
 
-            const index =
-                Number(
-                    element.dataset.index
+                const index =
+                    Number(
+                        element.dataset.index
+                    );
+
+
+                element.classList.toggle(
+                    "active",
+                    index === currentIndex
                 );
 
-
-            element.classList.toggle(
-                "active",
-                index === currentIndex
-            );
-
-        });
+            }
+        );
 
 }
 
@@ -925,10 +1028,13 @@ searchInput.addEventListener(
 
             visibleFiles =
                 allFiles.filter(
-                    file =>
-                        file.path
+                    file => {
+
+                        return file.path
                             .toLowerCase()
-                            .includes(query)
+                            .includes(query);
+
+                    }
                 );
 
         }
@@ -944,6 +1050,16 @@ searchInput.addEventListener(
 
             openFile(0);
 
+        } else {
+
+            welcome.classList.remove(
+                "hidden"
+            );
+
+            codeSection.classList.add(
+                "hidden"
+            );
+
         }
 
     }
@@ -951,7 +1067,7 @@ searchInput.addEventListener(
 
 
 // --------------------------------------------
-// COPY
+// COPY CODE
 // --------------------------------------------
 
 copyButton.addEventListener(
@@ -959,7 +1075,10 @@ copyButton.addEventListener(
     async () => {
 
 
-        if (!currentPath) {
+        if (
+            currentIndex < 0 ||
+            !visibleFiles[currentIndex]
+        ) {
 
             return;
 
@@ -974,32 +1093,49 @@ copyButton.addEventListener(
             `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/${BRANCH}/${encodeURI(file.path)}`;
 
 
-        const response =
-            await fetch(url);
+        try {
+
+            const response =
+                await fetch(url);
 
 
-        const text =
-            await response.text();
+            const text =
+                await response.text();
 
 
-        await navigator
-            .clipboard
-            .writeText(text);
+            await navigator
+                .clipboard
+                .writeText(text);
 
 
-        copyButton.textContent =
-            "Copied!";
+            const originalText =
+                copyButton.textContent;
 
 
-        setTimeout(
-            () => {
+            copyButton.textContent =
+                "Copied!";
 
-                copyButton.textContent =
-                    "Copy";
 
-            },
-            1000
-        );
+            setTimeout(
+                () => {
+
+                    copyButton.textContent =
+                        originalText;
+
+                },
+                1000
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not copy the code."
+            );
+
+        }
 
     }
 );
@@ -1048,6 +1184,60 @@ notes.addEventListener(
             getNotesKey(currentPath),
             notes.value
         );
+
+    }
+);
+
+
+// --------------------------------------------
+// KEYBOARD NAVIGATION
+// --------------------------------------------
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+
+        // Don't activate shortcuts while
+        // typing in search or notes.
+
+        if (
+            event.target.tagName === "INPUT" ||
+            event.target.tagName === "TEXTAREA"
+        ) {
+
+            return;
+
+        }
+
+
+        // Left arrow
+
+        if (
+            event.key === "ArrowLeft" &&
+            currentIndex > 0
+        ) {
+
+            openFile(
+                currentIndex - 1
+            );
+
+        }
+
+
+        // Right arrow
+
+        if (
+            event.key === "ArrowRight" &&
+            currentIndex <
+                visibleFiles.length - 1
+        ) {
+
+            openFile(
+                currentIndex + 1
+            );
+
+        }
 
     }
 );
