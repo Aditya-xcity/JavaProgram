@@ -166,17 +166,31 @@ async function loadRepository() {
         }
 
 
+        // allFiles =
+        //     data.tree
+
+        //         .filter(item => {
+
+        //             return (
+        //                 item.type === "blob" &&
+        //                 isSupportedFile(item.path)
+        //             );
+
+        //         })
+
+
+
         allFiles =
-            data.tree
+    data.tree
+        .filter(item => {
+            return (
+                item.type === "blob" &&
+                isSupportedFile(item.path)
+            );
+        })
 
-                .filter(item => {
 
-                    return (
-                        item.type === "blob" &&
-                        isSupportedFile(item.path)
-                    );
 
-                })
 
                 .sort((a, b) => {
 
@@ -332,8 +346,10 @@ function renderFileTree() {
     visibleFiles.forEach(
         (file, index) => {
 
-            const parts =
-                file.path.split("/");
+          const parts =
+    file.path
+        .replace(/^JavaCodes\//, "")
+        .split("/");
 
 
             let current = root;
